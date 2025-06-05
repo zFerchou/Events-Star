@@ -1,0 +1,17 @@
+
+en la raiz del directorio back-node:
+1. crear archivo .env
+2. dentro de .env colocar lo siguiente con sus respectivas credenciales:
+
+B_PORT=4222
+MONGO_URI=mongodb://127.0.0.1:27017/STR-EVENTS?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.0
+FRONTEND_URLC=http://localhost:4200
+
+NOTA: Estos datos se encuentran en tu usuario de mailtrap:
+
+EMAIL_HOST=sandbox.smtp.mailtrap.io
+EMAIL_PORT=2525
+EMAIL_USER=
+EMAIL_PASS=
+E_BACKEND_URL=http://localhost
+JWT_SECRET=unapalabrasecretaaaahaha

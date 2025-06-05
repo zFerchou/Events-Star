@@ -16,7 +16,7 @@ import {
 
 const router = express.Router();
 
-// http://localhost:PUERTO/usuarios/...
+// http://localhost:4222/users
 
 // Registrar un nuevo usuario
 router.post('/registro', registrarUsuario);

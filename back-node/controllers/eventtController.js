@@ -13,8 +13,8 @@ const crearEvento = async (req, res) => {
 
     try {
         const { date } = req.body;
-        //console.log(req['usuario']);
-        // Validación 1: Fecha debe estar en el futuro
+
+        // Validar fecha
         const fechaEvento = new Date(date);
         if (isNaN(fechaEvento.getTime()) || fechaEvento <= new Date()) {
             respuesta.status = 'error';
@@ -23,7 +23,9 @@ const crearEvento = async (req, res) => {
         }
 
         const nombreEvento = req.body.eventName?.trim().toLowerCase();
-        const eventoExistente = await Eventt.findOne({ eventName: { $regex: new RegExp(`^${nombreEvento}$`, 'i') } });
+        const eventoExistente = await Eventt.findOne({
+            eventName: { $regex: new RegExp(`^${nombreEvento}$`, 'i') }
+        });
 
         if (eventoExistente) {
             respuesta.status = 'error';
@@ -31,8 +33,12 @@ const crearEvento = async (req, res) => {
             return res.status(400).json(respuesta);
         }
 
-        const nuevoEvento = new Eventt(req.body);
-        nuevoEvento.createdBy = req.usuario._id;
+        const nuevoEvento = new Eventt({
+            ...req.body,
+            createdBy: req.usuario._id,
+            image: req.file ? req.file.filename : null  // <-- acá guardas el nombre del archivo
+        });
+
         await nuevoEvento.save();
 
         respuesta.status = 'success';
@@ -47,6 +53,7 @@ const crearEvento = async (req, res) => {
         res.status(400).json(respuesta);
     }
 };
+
 
 // Obtener todos los eventos
 const listarEventos = async (req, res) => {

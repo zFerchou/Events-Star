@@ -25,6 +25,7 @@ app.use(express.json()); // para que procese informacion json correctamente
 // Habilitar cookie parser
 app.use(cookieParser()); //da acceso en el request para usar las cookies
 
+//http://tu-servidor.com/uploads/nombreArchivo.jpg
 app.use('/public/uploads', express.static('public/uploads')); // 'uploads' es la carpeta donde guardas las imágenes
 
 

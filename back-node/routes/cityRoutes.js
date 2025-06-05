@@ -10,7 +10,7 @@ import {
 
 const router = express.Router();
 
-// http://localhost:PUERTO/api/ciudades
+// http://localhost:4222/cities
 router.get("/", listarCiudades);
 router.get("/:id", obtenerCiudad);
 router.post("/", crearCiudad);

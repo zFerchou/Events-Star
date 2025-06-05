@@ -10,7 +10,7 @@ import {
 
 const router = express.Router();
 
-// http://localhost:PUERTO/api/areas
+// http://localhost:4222/areas
 router.get("/", listarAreas);
 router.get("/:id", obtenerArea);
 router.post("/", crearArea);

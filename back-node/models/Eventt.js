@@ -51,6 +51,9 @@ const eventtSchema = new mongoose.Schema(
       ref: "Usuario",
       required: [true, "El creador del evento es obligatorio."],
     },
+    image:{
+      type:String
+    }
   },
   {
     timestamps: true,

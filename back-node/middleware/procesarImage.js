@@ -1,6 +1,6 @@
 import multer from 'multer';
 import path from 'path';
-import { genId } from '../helpers/tokens.js'
+import { generarId } from '../helpers/generarId.js'
 
 const storage = multer.diskStorage({
     destination:function(req,file,cb){
@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
     },
     filename: function(req,file,cb){
         //extname -> extencion de archivo
-        cb(null,genId()+path.extname(file.originalname))
+        cb(null,generarId()+path.extname(file.originalname))
     }
 })
 

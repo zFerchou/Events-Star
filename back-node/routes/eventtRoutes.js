@@ -9,12 +9,13 @@ import {
 } from "../controllers/eventtController.js";
 import guardia from '../middleware/guardiaRuta.js'; 
 import checkRole from "../middleware/checkRole.js";
+import upload from "../middleware/procesarImage.js";
 
 const router = express.Router();
 
-// Base: http://localhost:PUERTO/api/eventos
+// URL: http://localhost:4222/events
 
-router.post('/', guardia, checkRole('4DMlN'), crearEvento);
+router.post('/', guardia, checkRole('4DMlN'), upload.single('image'), crearEvento);
 router.get('/', listarEventos);
 router.get('/:id', obtenerEvento);
 router.put('/:id', guardia ,editarEvento);
