@@ -31,7 +31,7 @@ export class UsuarioService {
   public totalUsuarios = computed(() => this.usuarios().length);
 
   constructor() {
-    this.cargarUsuarios();
+    //this.cargarUsuarios();
   }
 
   mostrarErrores = effect(() => {

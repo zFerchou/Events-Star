@@ -28,7 +28,7 @@ export class AreaService {
   public totalAreas = computed(() => this.areas().length);
 
   constructor() {
-    this.cargarAreas();
+    //this.cargarAreas();
   }
 
   mostrarErrores = effect(() => {

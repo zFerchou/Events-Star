@@ -37,7 +37,7 @@ export class EventService {
   public totalEventos = computed(() => this.eventos().length);
 
   constructor() {
-    this.cargarEventos();
+    //this.cargarEventos();
   }
 
   // Efecto para mostrar errores (ejemplo simple)
