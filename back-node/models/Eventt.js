@@ -18,7 +18,7 @@ const eventtSchema = new mongoose.Schema(
       required: [true, "Event date is required."],
       validate: {
         validator: function (value) {
-          return value > new Date(); // Fecha debe ser futura
+          return value > new Date();
         },
         message: "Event date must be in the future.",
       },
@@ -26,33 +26,37 @@ const eventtSchema = new mongoose.Schema(
     city: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "City",
-      required: [false, "La ciudad es obligatoria."]
+      required: [false, "La ciudad es obligatoria."],
     },
     areaInteres: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "AreaInteres", // Referencia al modelo Area
+      ref: "AreaInteres",
       required: [false, "El área es obligatoria."],
     },
     participants: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Usuario", // Referencia al modelo de Usuario
+        ref: "Usuario",
         validate: {
           validator: async function (userId) {
             const user = await mongoose.model("Usuario").findById(userId);
-            return user !== null; // Verifica si el usuario existe
+            return user !== null;
           },
           message: "User does not exist.",
         },
       },
     ],
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Usuario",
+      required: [true, "El creador del evento es obligatorio."],
+    },
   },
   {
-    timestamps: true, // Crea campos `createdAt` y `updatedAt`
+    timestamps: true,
   }
 );
 
-// Validación adicional para no exceder el cupo máximo
 eventtSchema.pre("save", function (next) {
   if (this.participants.length > this.maxCapacity) {
     throw new Error("Participants exceed maximum capacity.");

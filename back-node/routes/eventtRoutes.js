@@ -7,15 +7,17 @@ import {
     eliminarEvento,
     agregarParticipante
 } from "../controllers/eventtController.js";
+import guardia from '../middleware/guardiaRuta.js'; 
+import checkRole from "../middleware/checkRole.js";
 
 const router = express.Router();
 
 // Base: http://localhost:PUERTO/api/eventos
 
-router.post('/', crearEvento);
+router.post('/', guardia, checkRole('4DMlN'), crearEvento);
 router.get('/', listarEventos);
 router.get('/:id', obtenerEvento);
-router.put('/:id', editarEvento);
+router.put('/:id', guardia ,editarEvento);
 router.delete('/:id', eliminarEvento);
 
 // Añadir participante al evento

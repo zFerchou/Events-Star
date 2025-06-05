@@ -14,7 +14,7 @@ const areaInteresSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const AreaInteres = mongoose.model("AreaInteres", areaInteresSchema);
+const AreaInteres = mongoose.model("AreaInteres", areaInteresSchema,"areaInteres");
 
 
 export default AreaInteres;

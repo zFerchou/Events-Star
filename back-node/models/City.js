@@ -24,5 +24,5 @@ const citySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const City = mongoose.model("City", citySchema);
+const City = mongoose.model("City", citySchema,"citys");
 export default City;

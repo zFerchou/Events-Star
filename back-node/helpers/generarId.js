@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 const generarId = () => {
     const random = Math.random().toString(32).substring(2);
     const fecha = Date.now().toString(32);
@@ -5,27 +7,7 @@ const generarId = () => {
 };
 
 
-function users() {
-    let i = 0;
-    let prod =
-    {
-        nombre: `Product ${i}`,
-        descrip: `Descripcion del producto ${i}`,
-        precio: Number(`1${i}${i + 1}0`),
-    };
-    let prodts = [];
 
-    for(i;i<15;i++) {
-        prod =
-        {
-            nombre: `Product ${i}`,
-            descrip: `Descripcion del producto ${i}`,
-            precio: Number(`1${i}${i + 1}0`),
-        };
-        prodts.push(prod);
-    }
+const generarJWT = (datos) => jwt.sign({ id: datos.id, name: datos.name }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-    return prodts;
-}
-
-export default generarId;
+export { generarId, generarJWT };

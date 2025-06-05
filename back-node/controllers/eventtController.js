@@ -13,7 +13,7 @@ const crearEvento = async (req, res) => {
 
     try {
         const { date } = req.body;
-
+        //console.log(req['usuario']);
         // Validación 1: Fecha debe estar en el futuro
         const fechaEvento = new Date(date);
         if (isNaN(fechaEvento.getTime()) || fechaEvento <= new Date()) {
@@ -32,6 +32,7 @@ const crearEvento = async (req, res) => {
         }
 
         const nuevoEvento = new Eventt(req.body);
+        nuevoEvento.createdBy = req.usuario._id;
         await nuevoEvento.save();
 
         respuesta.status = 'success';
@@ -103,7 +104,7 @@ const obtenerEvento = async (req, res) => {
 // Actualizar un evento
 const editarEvento = async (req, res) => {
     let respuesta = new Respuesta();
-
+    console.log(req.usuario);
     try {
         const { id } = req.params;
         const nuevosDatos = req.body;
@@ -114,6 +115,12 @@ const editarEvento = async (req, res) => {
             respuesta.status = 'error';
             respuesta.msg = 'Evento no encontrado';
             return res.status(404).json(respuesta);
+        }
+
+        if(evento.createdBy.toString() !== req.usuario._id.toString()){
+            respuesta.status = 'error';
+            respuesta.msg = 'No puedes modificar eventos de otro usuario';
+            return res.status(403).json(respuesta);
         }
 
         // Validación 1: maxCapacity no menor que los participantes actuales

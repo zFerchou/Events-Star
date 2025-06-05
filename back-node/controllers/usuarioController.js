@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 
 import Usuario from "../models/Usuario.js";
-import generarId from "../helpers/generarId.js";
-import { emailRegistro,emailOlvidePass } from '../helpers/email.js'
+import { generarId,generarJWT } from "../helpers/generarId.js";
+import { emailRegistro, emailOlvidePass } from '../helpers/email.js'
 
 
 class Respuesta {
@@ -200,13 +200,13 @@ const eliminarUsuario = async (req, res, next) => {
 };
 
 // Función para login de usuario
-const loginUsuario = async (req, res, next) => {
+const loginUsuario = async (req, res) => {
     let respuesta = new Respuesta();
 
     try {
         const { email, pass } = req.body;
 
-        // Verificar si el usuario existe
+        // Buscar usuario por email
         const usuario = await Usuario.findOne({ email });
         if (!usuario) {
             respuesta.status = 'error';
@@ -214,7 +214,7 @@ const loginUsuario = async (req, res, next) => {
             return res.status(400).json(respuesta);
         }
 
-        // Verificar la contraseña
+        // Verificar contraseña
         const passwordCorrecto = await bcrypt.compare(pass, usuario.pass);
         if (!passwordCorrecto) {
             respuesta.status = 'error';
@@ -222,13 +222,25 @@ const loginUsuario = async (req, res, next) => {
             return res.status(400).json(respuesta);
         }
 
-        // Excluir datos sensibles en la respuesta
+        // Generar JWT
+        const token = generarJWT({ id: usuario._id, name: usuario.name });
+
+        // Limpiar datos sensibles
         const usuarioRespuesta = usuario.toObject();
         delete usuarioRespuesta.pass;
         delete usuarioRespuesta.token;
         delete usuarioRespuesta.role;
         delete usuarioRespuesta.confirm;
 
+        // Configurar cookie
+        res.cookie('_jwtn', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 1000 * 60 * 60 * 24 * 2 //  días
+        });
+
+        // Responder con JSON
         respuesta.status = 'success';
         respuesta.msg = 'Inicio de sesión exitoso';
         respuesta.data = usuarioRespuesta;
