@@ -1,3 +1,8 @@
+cambiar usuario como administrador y pueda registrar eventos
+db.usuarios.updateOne({_id:ObjectId('684164e31eb87889e3323757')},{$set:{role:"4DMlN"}});
+
+insertar ciudades
+
 db.citys.insertMany([
   {
     name: "Madrid",
@@ -53,6 +58,7 @@ db.citys.insertMany([
 
 
 ################################
+insertar areas de interes 
 
 db.areaInteres.insertMany([
   { name: "Tecnología" },

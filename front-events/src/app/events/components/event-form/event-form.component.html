@@ -1,0 +1,63 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" novalidate>
+  <div>
+    <label for="eventName">Nombre del evento:</label>
+    <input id="eventName" formControlName="eventName" />
+    <div *ngIf="myForm.controls['eventName'].touched && myForm.controls['eventName'].invalid">
+      <small *ngIf="myForm.controls['eventName'].errors?.['required']">El nombre es obligatorio.</small>
+      <small *ngIf="myForm.controls['eventName'].errors?.['minlength']">Mínimo 3 caracteres.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="date">Fecha:</label>
+    <input id="date" type="date" formControlName="date" />
+    <div *ngIf="myForm.controls['date'].touched && myForm.controls['date'].invalid">
+      <small>La fecha es obligatoria.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="city">Ciudad:</label>
+    <select id="city" formControlName="city">
+      <option value="" disabled>Seleccione una ciudad</option>
+      <option *ngFor="let c of cities()" [value]="c._id">{{ c.name }}</option>
+    </select>
+    <div *ngIf="myForm.controls['city'].touched && myForm.controls['city'].invalid">
+      <small>Debe seleccionar una ciudad.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="areaInteres">Área de interés:</label>
+    <select id="areaInteres" formControlName="areaInteres">
+      <option value="" disabled>Seleccione un área de interés</option>
+      <option *ngFor="let a of areas()" [value]="a._id">{{ a.name }}</option>
+    </select>
+    <div *ngIf="myForm.controls['areaInteres'].touched && myForm.controls['areaInteres'].invalid">
+      <small>Debe seleccionar un área de interés.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="maxCapacity">Capacidad máxima:</label>
+    <input
+      id="maxCapacity"
+      type="number"
+      formControlName="maxCapacity"
+      min="1"
+    />
+    <div *ngIf="myForm.controls['maxCapacity'].touched && myForm.controls['maxCapacity'].invalid">
+      <small>Debe ingresar una capacidad válida (mínimo 1).</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="image">Imagen del evento:</label>
+    <input id="image" type="file" (change)="onFileSelected($event)" accept="image/*" />
+  </div>
+
+  <button type="submit">Crear Evento</button>
+</form>
+
+<!-- Debug -->
+<pre>{{ myForm.value | json }}</pre>

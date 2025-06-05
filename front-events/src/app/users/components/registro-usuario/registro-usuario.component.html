@@ -1,0 +1,78 @@
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()" novalidate>
+  <!-- Campo Nombre -->
+  <div>
+    <label for="name">Nombre:</label>
+    <input id="name" type="text" formControlName="name" />
+    <div *ngIf="registroForm.controls['name'].touched && registroForm.controls['name'].invalid">
+      <small *ngIf="registroForm.controls['name'].errors?.['required']">El nombre es obligatorio.</small>
+      <small *ngIf="registroForm.controls['name'].errors?.['minlength']">Mínimo 2 caracteres.</small>
+    </div>
+  </div>
+
+  <!-- Campo Apellido -->
+  <div>
+    <label for="lastN">Apellido:</label>
+    <input id="lastN" type="text" formControlName="lastN" />
+    <div *ngIf="registroForm.controls['lastN'].touched && registroForm.controls['lastN'].invalid">
+      <small *ngIf="registroForm.controls['lastN'].errors?.['required']">El apellido es obligatorio.</small>
+      <small *ngIf="registroForm.controls['lastN'].errors?.['minlength']">Mínimo 2 caracteres.</small>
+    </div>
+  </div>
+
+  <!-- Campo Email -->
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" />
+    <div *ngIf="registroForm.controls['email'].touched && registroForm.controls['email'].invalid">
+      <small *ngIf="registroForm.controls['email'].errors?.['required']">El email es obligatorio.</small>
+      <small *ngIf="registroForm.controls['email'].errors?.['email']">Ingrese un email válido.</small>
+    </div>
+  </div>
+
+  <!-- Campo Contraseña -->
+  <div>
+    <label for="pass">Contraseña:</label>
+    <input id="pass" type="password" formControlName="pass" />
+    <div *ngIf="registroForm.controls['pass'].touched && registroForm.controls['pass'].invalid">
+      <small *ngIf="registroForm.controls['pass'].errors?.['required']">La contraseña es obligatoria.</small>
+      <small *ngIf="registroForm.controls['pass'].errors?.['minlength']">Mínimo 6 caracteres.</small>
+    </div>
+  </div>
+
+  <!-- Campo Repetir Contraseña -->
+  <div>
+    <label for="rpass">Repetir Contraseña:</label>
+    <input id="rpass" type="password" formControlName="rpass" />
+    <div *ngIf="registroForm.controls['rpass'].touched && registroForm.controls['rpass'].invalid">
+      <small *ngIf="registroForm.controls['rpass'].errors?.['required']">Debe repetir la contraseña.</small>
+    </div>
+    <small *ngIf="registroForm.hasError('passwordsNotMatch') && registroForm.controls['rpass'].touched" class="text-danger">
+      Las contraseñas no coinciden
+    </small>
+  </div>
+
+  <!-- Campo Dirección -->
+  <div>
+    <label for="address">Dirección:</label>
+    <input id="address" type="text" formControlName="address" />
+    <div *ngIf="registroForm.controls['address'].touched && registroForm.controls['address'].invalid">
+      <small *ngIf="registroForm.controls['address'].errors?.['required']">La dirección es obligatoria.</small>
+    </div>
+  </div>
+
+  <!-- Campo Teléfono -->
+  <div>
+    <label for="phone">Teléfono (opcional):</label>
+    <input id="phone" type="tel" formControlName="phone" />
+    <div *ngIf="registroForm.controls['phone'].touched && registroForm.controls['phone'].invalid">
+      <small *ngIf="registroForm.controls['phone'].errors?.['pattern']">Teléfono no válido.</small>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="registroForm.invalid">Registrarse</button>
+</form>
+
+<!-- Debug -->
+<pre>{{ registroForm.value | json }}</pre>
+<pre>Valid: {{ registroForm.valid }}</pre>
+<pre>Touched: {{ registroForm.touched }}</pre>

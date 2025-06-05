@@ -1,0 +1,23 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+  <div>
+    <label for="email">Email</label>
+    <input type="email" id="email" formControlName="email" placeholder="usuario@correo.com" />
+    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">
+      Email es obligatorio y debe tener formato válido.
+    </div>
+  </div>
+
+  <div>
+    <label for="pass">Contraseña</label>
+    <input type="password" id="pass" formControlName="pass" placeholder="••••••" />
+    <div *ngIf="loginForm.get('pass')?.invalid && loginForm.get('pass')?.touched" class="error">
+      La contraseña es obligatoria (mínimo 6 caracteres).
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
+
+  <div *ngIf="usuarioService.error()" class="error">
+    {{ usuarioService.error() }}
+  </div>
+</form>
