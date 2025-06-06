@@ -26,14 +26,6 @@ export class LoginComponent {
 
     const { email, pass } = this.loginForm.value;
 
-    this.usuarioService.loginUsuario(email, pass).subscribe({
-      next: (res) => {
-        console.log('Login exitoso:', res.data);
-        // aquí puedes navegar a otra ruta
-      },
-      error: () => {
-        // el error ya se muestra desde el service
-      }
-    });
+    this.usuarioService.loginUsuario(email, pass).subscribe();
   }
 }

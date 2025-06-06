@@ -53,8 +53,8 @@ export class AreaService {
             }
             this.cargando.set(false);
           },
-          error: () => {
-            this.error.set('Error al cargar áreas');
+          error: (err) => {
+            this.error.set(err['error'].msg);
             this.cargando.set(false);
           }
         })
@@ -74,8 +74,8 @@ export class AreaService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al obtener el área');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       )
@@ -94,8 +94,8 @@ export class AreaService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al crear área');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       );
@@ -116,8 +116,8 @@ export class AreaService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al actualizar área');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       );
@@ -138,8 +138,8 @@ export class AreaService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al eliminar área');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       );

@@ -72,7 +72,7 @@ const confirmarUsuario = async (req, res) => {
             return res.status(400).json(respuesta);
         }
 
-        usuario.confirmado = true;
+        usuario.confirm = true;
         usuario.token = ""; // Limpia el token
         await usuario.save();
 
@@ -210,7 +210,7 @@ const loginUsuario = async (req, res) => {
         const usuario = await Usuario.findOne({ email });
         if (!usuario) {
             respuesta.status = 'error';
-            respuesta.msg = 'Credenciales inválidas';
+            respuesta.msg = 'EL usuario no existe';
             return res.status(400).json(respuesta);
         }
 
@@ -218,7 +218,13 @@ const loginUsuario = async (req, res) => {
         const passwordCorrecto = await bcrypt.compare(pass, usuario.pass);
         if (!passwordCorrecto) {
             respuesta.status = 'error';
-            respuesta.msg = 'Credenciales inválidas';
+            respuesta.msg = 'Contraseña incorrecta';
+            return res.status(400).json(respuesta);
+        }
+
+        if(usuario.confirm === false){
+            respuesta.status = 'error';
+            respuesta.msg = 'La cuenta no ha sido confirmada';
             return res.status(400).json(respuesta);
         }
 

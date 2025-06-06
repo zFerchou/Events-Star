@@ -1,0 +1,126 @@
+.header {
+    padding-inline: 2.5rem;
+    width: 100%;
+}
+
+@media (min-width:768px) {
+    .header {
+        padding-inline: 5rem;
+    }
+}
+
+.header__img {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('../../../../../public/people-festival.jpg');
+    width: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    padding-inline: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 9rem;
+
+}
+
+@media (min-width:768px) {
+    .header__img {
+        padding-inline: 4rem;
+        padding-top: 6rem;
+        padding-bottom: 12rem;
+    }
+}
+
+.header__txt {
+    width: 100%;
+}
+
+@media (min-width:768px) {
+    .header__txt {
+        width: 50%;
+    }
+}
+
+.header__title {
+    font-size: 3.5rem;
+    padding-bottom: 1rem;
+}
+
+.header__p {
+    font-size: 2rem;
+}
+
+.relative {
+    position: relative;
+}
+
+.section {
+    width: 100%;
+    padding-inline: 6rem;
+    position: absolute;
+    bottom: -3rem;
+}
+
+@media (min-width:768px) {
+    .section {
+        padding-inline: 10rem;
+    }
+}
+
+.section__search {
+    width: 100%;
+    background-color: var(--color-fondo-dgr);
+    padding: 3rem 1.5rem;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+@media (min-width:768px) {
+    .section__search {
+        padding-block: 4rem;
+    }
+}
+
+.field {
+    display: flex;
+    column-gap: 1rem;
+    width: 100%;
+}
+
+.field input {
+    width: 90%;
+    border: none;
+    background-color: transparent;
+    color: var(--color-blanco);
+}
+
+.field input:focus-visible {
+    outline: none;
+    border-bottom: 1px solid var(--color-btns);
+}
+
+.field button {
+    background-color: var(--color-btns);
+    border: none;
+    color: var(--color-fondo);
+    border-radius: 1rem;
+}
+
+.field input,
+.field button {
+    padding: .5rem 1rem;
+    font-size: 1.6rem;
+    overflow: hidden;
+}
+
+
+@media (min-width:768px) {
+    .field input {
+        width: 100%;
+    }
+
+    .field button {
+        width: 20%;
+    }
+}

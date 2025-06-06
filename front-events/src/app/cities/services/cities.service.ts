@@ -53,8 +53,8 @@ export class CityService {
             }
             this.cargando.set(false);
           },
-          error: () => {
-            this.error.set('Error al cargar ciudades');
+          error: (err) => {
+            this.error.set(err['error'].msg);
             this.cargando.set(false);
           }
         })
@@ -74,8 +74,8 @@ export class CityService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al obtener la ciudad');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       )
@@ -94,8 +94,8 @@ export class CityService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al crear ciudad');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       );
@@ -116,8 +116,8 @@ export class CityService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al actualizar ciudad');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       );
@@ -138,8 +138,8 @@ export class CityService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al eliminar ciudad');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       );

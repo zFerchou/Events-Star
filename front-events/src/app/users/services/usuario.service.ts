@@ -56,8 +56,8 @@ export class UsuarioService {
             }
             this.cargando.set(false);
           },
-          error: () => {
-            this.error.set('Error al cargar usuarios');
+          error: (err) => {
+            this.error.set(err['error'].msg);
             this.cargando.set(false);
           }
         })
@@ -77,8 +77,8 @@ export class UsuarioService {
             this.error.set(res.msg);
           }
         },
-        error: () => {
-          this.error.set('Error al registrar usuario');
+        error: (err) => {
+          this.error.set(err['error'].msg);
         }
       })
     );
@@ -96,8 +96,8 @@ export class UsuarioService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al obtener el usuario');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       )
@@ -115,8 +115,8 @@ export class UsuarioService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al eliminar usuario');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       )
@@ -137,8 +137,8 @@ export class UsuarioService {
               this.error.set(res.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al editar usuario');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       )
@@ -163,8 +163,9 @@ export class UsuarioService {
           this.error.set(res.msg);
         }
       },
-      error: () => {
-        this.error.set('Error al iniciar sesión');
+      error: (err) => {
+        console.log(err);
+        this.error.set(err['error'].msg);
       }
     })
   );

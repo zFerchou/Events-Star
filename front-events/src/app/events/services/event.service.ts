@@ -66,7 +66,7 @@ export class EventService {
             this.cargandoEventos.set(false);
           },
           error: (err) => {
-            this.error.set('Error al cargar eventos');
+            this.error.set(err['error'].msg);
             this.cargandoEventos.set(false);
           }
         })
@@ -86,8 +86,8 @@ export class EventService {
               this.error.set(resp.msg);
             }
           },
-          error: () => {
-            this.error.set('Error al obtener evento');
+          error: (err) => {
+            this.error.set(err['error'].msg);
           }
         })
       )
@@ -108,8 +108,8 @@ export class EventService {
             this.error.set(resp.msg);
           }
         },
-        error: () => {
-          this.error.set('Error al crear evento, no estas autenticado');
+        error: (err) => {
+          this.error.set(err['error'].msg);
         }
       })
     );
@@ -131,8 +131,8 @@ export class EventService {
             this.error.set(resp.msg);
           }
         },
-        error: () => {
-          this.error.set('Error al editar evento');
+        error: (err) => {
+          this.error.set(err['error'].msg);
         }
       })
     );
@@ -154,8 +154,8 @@ export class EventService {
             this.error.set(resp.msg);
           }
         },
-        error: () => {
-          this.error.set('Error al eliminar evento');
+        error: (err) => {
+          this.error.set(err['error'].msg);
         }
       })
     );
@@ -177,8 +177,8 @@ export class EventService {
             this.error.set(resp.msg);
           }
         },
-        error: () => {
-          this.error.set('Error al añadir participante');
+        error: (err) => {
+          this.error.set(err['error'].msg);
         }
       })
     );

@@ -1,0 +1,18 @@
+.areas{
+    width: 100%;
+    margin-top: 4rem;
+    padding: 3rem 2.5rem;
+}
+
+@media (min-width:768px) {
+    .areas {
+        padding-inline: 5rem;
+    }
+}
+
+.areas__heading {
+    width: 100%;
+    text-align: center;
+    font-size: 2.8rem;
+}
+
