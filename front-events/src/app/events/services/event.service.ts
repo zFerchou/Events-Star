@@ -60,6 +60,7 @@ export class EventService {
           next: (resp) => {
             if (resp.status === 'success') {
               this.eventos.set(resp.data);
+              console.log(this.eventos());
             } else {
               this.error.set(resp.msg);
             }

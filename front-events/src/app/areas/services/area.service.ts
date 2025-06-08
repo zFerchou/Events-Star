@@ -28,7 +28,7 @@ export class AreaService {
   public totalAreas = computed(() => this.areas().length);
 
   constructor() {
-    //this.cargarAreas();
+    this.cargarAreas();
   }
 
   mostrarErrores = effect(() => {
@@ -48,6 +48,7 @@ export class AreaService {
           next: (res) => {
             if (res.status === 'success') {
               this.areas.set(res.data);
+              console.log(this.areas());
             } else {
               this.error.set(res.msg);
             }

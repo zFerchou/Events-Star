@@ -61,16 +61,10 @@ db.citys.insertMany([
 insertar areas de interes 
 
 db.areaInteres.insertMany([
-  { name: "Tecnología" },
-  { name: "Salud" },
-  { name: "Educación" },
-  { name: "Finanzas" },
-  { name: "Desarrollo Personal" },
-  { name: "Arte y Cultura" },
-  { name: "Medio Ambiente" },
-  { name: "Ciencia" },
-  { name: "Negocios" },
-  { name: "Deportes" }
+  { name: "Conciertos", categorias:['Rock/Metal','Pop/Romántica','Rap/Hip-Hop','Electrónica','Festivales'], img:'concert.png' },
+  { name: "Culturales", categorias:['Teatro','Danza','Ballet','Musicales','Comedia'], img:'theater.png' },
+  { name: "Deportes", categorias:['Automovilismo', 'Fútbol', 'Box', 'Lucha Libre', 'Béisbol'], img:'sports.png' },
+  { name: "Informativos", categorias:['Expo/Convenciones', 'Seminarios/Conferencias', 'Audiovisual/Cine'], img:'conference.png' },
 ]);
 
 

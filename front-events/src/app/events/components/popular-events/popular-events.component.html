@@ -2,9 +2,25 @@
     <h2 class="events__heading">Eventos populares</h2>
 
     <div class="events__cards">
-        <div class="event-card">
-            <img class="event-card__img" src="" alt="">
-            <p class="event-card__descrip" ></p>
-        </div>
+        @for (item of events(); track $index) {
+            <div class="event-card">
+                <div class="event-card__img">
+                    <img [src]="item.image ? item.image : 'no-image-available.webp' " alt="imagen del evento {{item.eventName}}">
+                    <div class="event-card__info">
+                        <div class="event-card__head">
+                            <h3>eventName</h3>
+                            <p>date</p>
+                        </div>
+    
+                        <div class="event-card__tags">
+                            <p>city.name, city.country</p>
+                            <p>areaInteres</p>
+                            <p>maxCapacity</p>
+                        </div>
+                        <button>Go!</button>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </section>

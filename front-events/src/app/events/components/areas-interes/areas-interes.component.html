@@ -1,10 +1,23 @@
 <section class="areas">
     <h2 class="areas__heading">Areas de Interés</h2>
 
-    <div class="areas__cards">
+    <!-- <div class="areas__cards">
         <div class="area-card">
             <img class="area-card__img" src="" alt="">
             <p class="area-card__descrip" ></p>
         </div>
+    </div> -->
+    <div class="card">
+        <p-carousel [value]="areas()" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+            <ng-template let-area #item>
+                <div class="area-card">
+                    <div class="area-card__img">
+                        <!-- <img class="img" src="{{baseURL+'/public/uploads/'+area.img}}" alt=""> -->
+                    </div>
+                    <p class="area-card__descrip">{{area.name}}</p>
+                </div>
+            </ng-template>
+        </p-carousel>
     </div>
+
 </section>

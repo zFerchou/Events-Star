@@ -28,7 +28,7 @@ export class CityService {
   public totalCiudades = computed(() => this.ciudades().length);
 
   constructor() {
-    //this.cargarCiudades();
+    this.cargarCiudades();
   }
 
   mostrarErrores = effect(() => {

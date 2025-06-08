@@ -13,8 +13,8 @@ import { AreaService } from '../../../areas/services/area.service';
 })
 export class EventFormComponent implements OnInit{
   ngOnInit(): void {
-    this.citiesService.cargarCiudades();
-    this.areaService.cargarAreas();
+    //this.citiesService.cargarCiudades();
+    //this.areaService.cargarAreas();
   }
   private fb = inject(FormBuilder);
   private eventService = inject(EventService);
