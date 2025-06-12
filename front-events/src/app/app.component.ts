@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { EventFormComponent } from './events/components/event-form/event-form.component';
-import { RegistroUsuarioComponent } from './users/components/registro-usuario/registro-usuario.component';
-import { LoginComponent } from './users/components/login/login.component';
+import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { BreadcrumbsT1Component } from './shared/components/breadcrumbs-t1/breadcrumbs-t1.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, EventFormComponent, RegistroUsuarioComponent, LoginComponent],
+  imports: [
+    RouterOutlet,
+    NavBarComponent,
+    FooterComponent,
+    BreadcrumbsT1Component
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

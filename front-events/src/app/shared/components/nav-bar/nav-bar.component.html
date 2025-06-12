@@ -12,7 +12,11 @@
     </div>
 
     <div class="auth">
-        <a [routerLink]="['/']" class="auth__login">Iniciar Sesión</a>
-        <a [routerLink]="['/']" class="auth__signup">Crear Cuenta</a>
+        @if(user()){
+            <a (click)="logout()" class="auth__login">Cerrar Sesión</a>
+        } @else {
+            <a [routerLink]="['/users/login']" class="auth__login">Iniciar Sesión</a>
+        }
+        <a [routerLink]="['/users/signup']" class="auth__signup">Crear Cuenta</a>
     </div>
 </nav>

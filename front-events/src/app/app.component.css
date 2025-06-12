@@ -1,0 +1,17 @@
+.page{
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+}
+
+.nav{
+    grid-row: 1/2;
+}
+
+.main{
+    grid-row:2/3;
+}
+
+.footer {
+    grid-row:3/4
+}

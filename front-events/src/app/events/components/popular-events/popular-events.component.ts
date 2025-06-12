@@ -4,7 +4,7 @@ import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-popular-events',
-  imports: [JsonPipe],
+  imports: [],
   templateUrl: './popular-events.component.html',
   styleUrl: './popular-events.component.css'
 })

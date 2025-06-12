@@ -3,15 +3,21 @@ import { EventsHomePageComponent } from './pages/events-home-page/events-home-pa
 
 export const eventRoutes: Routes = [
     {
-        path:'',
-        children:[
+        path: '',
+        children: [
             {
-                path:'home',
-                component:EventsHomePageComponent
+                path: 'home',
+                component: EventsHomePageComponent,
+                data: {
+                    breadcrumb: 'Home',
+                    icon: 'home',
+                    description: 'Página de inicio con resumen de contenidos',
+                    excludeFromSitemap: true
+                }
             },
             {
-                path:'**',
-                redirectTo:'home'
+                path: '**',
+                redirectTo: 'home'
             }
         ]
     }

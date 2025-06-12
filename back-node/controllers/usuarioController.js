@@ -247,6 +247,7 @@ const loginUsuario = async (req, res) => {
         });
 
         // Responder con JSON
+        //usuarioRespuesta.jwt = token;
         respuesta.status = 'success';
         respuesta.msg = 'Inicio de sesión exitoso';
         respuesta.data = usuarioRespuesta;

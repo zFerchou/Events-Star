@@ -1,0 +1,45 @@
+.margenes {
+  padding-inline: 2.5rem;
+}
+
+@media (min-width:768px) {
+  .margenes {
+    padding-inline: 5rem;
+  }
+}
+
+.breadcrumb {
+  display: flex;
+  list-style: none;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-fondo-dgr);
+  border-radius: 0.25rem;
+  margin: .5rem 0;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+
+}
+
+.breadcrumb-item a {
+  color: var(--color-btns);
+  text-decoration: none;
+}
+
+.breadcrumb-item span {
+  color: #007bff;
+}
+
+.breadcrumb-item a,
+.breadcrumb-item span {
+  font-weight: 800;
+  font-size: medium;
+}
+
+
+.breadcrumb-item.active {
+  color: var(--color-fondo-btns);
+}

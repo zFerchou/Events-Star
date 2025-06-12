@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface Usuario {
   _id?: string;
@@ -22,9 +23,10 @@ interface ApiResponse<T> {
 })
 export class UsuarioService {
   private http = inject(HttpClient);
-
+  private router = inject(Router);
   public usuarios = signal<Usuario[]>([]);
   public usuarioSeleccionado = signal<Usuario | null>(null);
+  public user = signal<string|null>(null);
   public cargando = signal(false);
   public error = signal<string | null>(null);
 
@@ -32,6 +34,8 @@ export class UsuarioService {
 
   constructor() {
     //this.cargarUsuarios();
+    this.user.set(window.sessionStorage.getItem('usr'));
+    
   }
 
   mostrarErrores = effect(() => {
@@ -159,6 +163,10 @@ export class UsuarioService {
       next: (res) => {
         if (res.status === 'success') {
           this.usuarioSeleccionado.set(res.data);
+          window.sessionStorage.setItem('usr', JSON.stringify( this.usuarioSeleccionado() ) );
+          this.user.set(window.sessionStorage.getItem('usr'));
+          console.log(this.user());
+          this.router.navigate(['/events/home'])
         } else {
           this.error.set(res.msg);
         }

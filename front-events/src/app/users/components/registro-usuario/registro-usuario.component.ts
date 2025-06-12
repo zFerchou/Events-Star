@@ -8,6 +8,8 @@ import { UsuarioService } from '../../services/usuario.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registro-usuario.component.html',
+  styleUrls:['../login/login.component.css','./registro-usuario.component.css']
+
 })
 export class RegistroUsuarioComponent {
   private fb = inject(FormBuilder);

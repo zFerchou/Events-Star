@@ -8,11 +8,11 @@
         </div>
     </div> -->
     <div class="card">
-        <p-carousel [value]="areas()" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+        <p-carousel [value]="areas()" [numVisible]="1" [numScroll]="1" >
             <ng-template let-area #item>
                 <div class="area-card">
                     <div class="area-card__img">
-                        <!-- <img class="img" src="{{baseURL+'/public/uploads/'+area.img}}" alt=""> -->
+                        <img class="img" src="{{baseURL+'/public/uploads/'+area.img}}" alt="">
                     </div>
                     <p class="area-card__descrip">{{area.name}}</p>
                 </div>
