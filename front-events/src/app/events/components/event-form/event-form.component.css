@@ -1,0 +1,21 @@
+
+.form-campo select {
+    width:100%;
+    padding: .8rem 1.5rem;
+    font-size: 1.8rem;
+    background-color: var(--color-fondo);
+    border: none;
+}
+
+.form-campo select:focus-visible {
+    outline: none;
+    border: 1px solid var(--color-btns);
+}
+
+
+
+@media (min-width:768px) {
+    .login-form {
+        padding-inline: 40rem;
+    }
+}

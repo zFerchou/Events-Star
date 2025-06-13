@@ -13,6 +13,7 @@ const crearEvento = async (req, res) => {
 
     try {
         const { date } = req.body;
+        console.log(req.body);
 
         // Validar fecha
         const fechaEvento = new Date(date);
@@ -200,6 +201,7 @@ const agregarParticipante = async (req, res) => {
         const { idEvento } = req.params;
         const { idUsuario } = req.body;
 
+        console.log(idUsuario,idEvento);
         const evento = await Eventt.findById(idEvento);
 
         if (!evento) {
@@ -243,11 +245,54 @@ const agregarParticipante = async (req, res) => {
     }
 };
 
+// Anular reservación de un evento
+const anularReserva = async (req, res) => {
+    let respuesta = new Respuesta();
+
+    try {
+        const { idEvento } = req.params;
+        const { idUsuario } = req.body;
+
+        const evento = await Eventt.findById(idEvento);
+
+        if (!evento) {
+            respuesta.status = 'error';
+            respuesta.msg = 'Evento no encontrado';
+            return res.status(404).json(respuesta);
+        }
+
+        if (!evento.participants.includes(idUsuario)) {
+            respuesta.status = 'error';
+            respuesta.msg = 'El usuario no está registrado en este evento';
+            return res.status(400).json(respuesta);
+        }
+
+        evento.participants = evento.participants.filter(
+            (id) => id.toString() !== idUsuario
+        );
+
+        await evento.save();
+
+        respuesta.status = 'success';
+        respuesta.msg = 'Reservación anulada correctamente';
+        respuesta.data = evento;
+        res.json(respuesta);
+
+    } catch (error) {
+        console.log(error);
+        respuesta.status = 'error';
+        respuesta.msg = 'Error al anular la reservación';
+        res.status(500).json(respuesta);
+    }
+};
+
+
 export {
     crearEvento,
     listarEventos,
     obtenerEvento,
     editarEvento,
     eliminarEvento,
-    agregarParticipante
+    agregarParticipante,
+    anularReserva
 };

@@ -61,7 +61,7 @@
     text-decoration: none;
     width: 100%;
     color: var(--color-balnco);
-    padding: 1rem 2rem;
+    padding: 1rem .5rem;
     background-color: var(--color-fondo-dgr);
     text-align: center;
     font-weight: 600;
@@ -78,4 +78,8 @@
 .auth__signup:hover {
     color: var(--color-btns);
     transform: scale(1.05);
+}
+
+.active{
+    color: var(--color-btns);
 }

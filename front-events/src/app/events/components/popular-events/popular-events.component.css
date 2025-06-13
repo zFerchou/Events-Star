@@ -130,3 +130,23 @@
     font-size: medium;
     font-weight: 700;
 }
+
+.event-card__btn:hover{
+    filter: contrast(2);
+}
+
+
+.event-card__btn--reservado{
+    background-color: var(--color-rojo-fondo);
+    border: none;
+    padding: 1rem 2rem;
+    grid-column: 2/3;
+    border-radius: 1rem;
+    color: var(--color-fondo);
+    font-size: medium;
+    font-weight: 700;
+}
+
+.event-card__btn--reservado:hover{
+    filter: contrast(2);
+}

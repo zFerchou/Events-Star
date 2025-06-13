@@ -5,7 +5,8 @@ import {
     obtenerEvento,
     editarEvento,
     eliminarEvento,
-    agregarParticipante
+    agregarParticipante,
+    anularReserva
 } from "../controllers/eventtController.js";
 import guardia from '../middleware/guardiaRuta.js'; 
 import checkRole from "../middleware/checkRole.js";
@@ -23,5 +24,8 @@ router.delete('/:id', eliminarEvento);
 
 // Añadir participante al evento
 router.post('/:idEvento/participantes', agregarParticipante);
+
+// Anular reservación de un evento
+router.delete('/:idEvento/participantes', anularReserva);
 
 export default router;

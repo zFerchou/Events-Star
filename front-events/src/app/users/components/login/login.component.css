@@ -1,5 +1,6 @@
 .capa {
     padding-inline: 2.5rem;
+    padding-bottom: 3rem;
     height: 100%;
     width: 100%;
 }
@@ -13,12 +14,12 @@
 .login-form {
     background-color: var(--color-fondo-dgr);
     height: 100%;
-
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    
     width: 100%;
     padding-inline: 2.5rem;
     padding-block: 2rem;
@@ -50,6 +51,7 @@
 }
 
 .form-campo input {
+    width:100%;
     padding: .8rem 1.5rem;
     font-size: 1.8rem;
     background-color: var(--color-fondo);
@@ -74,7 +76,7 @@
 }
 
 .login-form button:hover {
-    filter: contrast(3);
+    filter: contrast(2);
 }
 
 .error {

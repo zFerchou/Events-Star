@@ -1,18 +1,23 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../../users/services/usuario.service';
 
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [RouterLink],
+  imports: [RouterModule],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent implements OnInit {
+  public ROLE = '4DMlN';
   private USR_KEY = 'usr';
   private userServ = inject(UsuarioService);
-  public user = computed(()=>this.userServ.user())
+  public user = computed(() => {
+    let usr = JSON.parse( this.userServ.user() || '{}');
+    return usr;
+  });
+
 
   ngOnInit(): void {
     console.log(this.user());

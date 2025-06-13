@@ -235,7 +235,7 @@ const loginUsuario = async (req, res) => {
         const usuarioRespuesta = usuario.toObject();
         delete usuarioRespuesta.pass;
         delete usuarioRespuesta.token;
-        delete usuarioRespuesta.role;
+        //delete usuarioRespuesta.role;
         delete usuarioRespuesta.confirm;
 
         // Configurar cookie

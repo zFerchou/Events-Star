@@ -5,14 +5,16 @@
 
 
     <div class="links">
-        <a [routerLink]="['/']" acttivatedRoute="active" class="links__link">Enlace1</a>
-        <a [routerLink]="['/']" acttivatedRoute="active" class="links__link">Enlace1</a>
-        <a [routerLink]="['/']" acttivatedRoute="active" class="links__link">Enlace1</a>
-        <a [routerLink]="['/']" acttivatedRoute="active" class="links__link">Enlace1</a>
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Todos los eventos</a>
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Conciertos</a>
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Deportes</a>
+        @if( user().role === ROLE ){
+            <a [routerLink]="['/events/create']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Publicar Evento</a>
+        }
     </div>
 
     <div class="auth">
-        @if(user()){
+        @if( user()._id ){
             <a (click)="logout()" class="auth__login">Cerrar Sesión</a>
         } @else {
             <a [routerLink]="['/users/login']" class="auth__login">Iniciar Sesión</a>

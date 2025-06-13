@@ -173,6 +173,7 @@ export class EventService {
             this.eventos.update(list => list.map(ev => ev._id === idEvento ? resp.data : ev));
             if (this.eventoSeleccionado()?._id === idEvento) {
               this.eventoSeleccionado.set(resp.data);
+              console.log(resp);
             }
           } else {
             this.error.set(resp.msg);
@@ -182,6 +183,26 @@ export class EventService {
           this.error.set(err['error'].msg);
         }
       })
-    );
+    ).subscribe();
+  }
+
+  anularReserva(idEvento: string, idUsuario: string){
+    this.error.set(null);
+    return this.http.delete<ApiResponse<Evento>>(`${environment.apiUrl}/events/${idEvento}/participantes`, {
+      body:{ idUsuario },
+      withCredentials: true
+    }).pipe(
+      tap({
+        next: (resp) => {
+          if (resp.status === 'success') {
+            alert('Has anulado tu reservación!')
+          }
+        },
+        error: (err) => {
+          this.error.set(err['error'].msg);
+        }
+      })
+    ).subscribe();
+
   }
 }

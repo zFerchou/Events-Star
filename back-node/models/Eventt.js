@@ -33,6 +33,10 @@ const eventtSchema = new mongoose.Schema(
       ref: "AreaInteres",
       required: [false, "El área es obligatoria."],
     },
+    category: {
+      type: String,
+      required: [true, "La categoría es obligatoria."],
+    },
     participants: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -51,8 +55,8 @@ const eventtSchema = new mongoose.Schema(
       ref: "Usuario",
       required: [true, "El creador del evento es obligatorio."],
     },
-    image:{
-      type:String
+    image: {
+      type: String
     }
   },
   {
