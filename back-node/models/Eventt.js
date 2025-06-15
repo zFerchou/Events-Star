@@ -37,6 +37,10 @@ const eventtSchema = new mongoose.Schema(
       type: String,
       required: [true, "La categoría es obligatoria."],
     },
+    published: {
+      type: Boolean,
+      default: true
+    },
     participants: [
       {
         type: mongoose.Schema.Types.ObjectId,

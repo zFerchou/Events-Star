@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { EventsHomePageComponent } from './pages/events-home-page/events-home-page.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
 import { guardiaCrearGuard } from './guards/guardia-crear.guard';
+import { AdminEventsPageComponent } from './pages/admin-events-page/admin-events-page.component';
 
 export const eventRoutes: Routes = [
     {
@@ -27,6 +28,16 @@ export const eventRoutes: Routes = [
                     excludeFromSitemap: true
                 },
                 canActivate:[guardiaCrearGuard]
+            },
+            {
+                path: 'all-events',
+                component: AdminEventsPageComponent,
+                data: {
+                    breadcrumb: 'Todos los eventos',
+                    icon: 'all-events',
+                    description: 'Página para ver todos los eventos ',
+                    excludeFromSitemap: true
+                }
             },
             {
                 path: '**',

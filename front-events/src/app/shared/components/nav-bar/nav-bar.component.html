@@ -5,7 +5,7 @@
 
 
     <div class="links">
-        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Todos los eventos</a>
+        <a [routerLink]="['/events/all-events']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Ver Eventos</a>
         <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Conciertos</a>
         <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Deportes</a>
         @if( user().role === ROLE ){

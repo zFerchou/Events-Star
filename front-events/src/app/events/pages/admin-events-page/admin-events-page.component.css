@@ -1,0 +1,152 @@
+.capa {
+    padding: 2.5rem;
+}
+
+.heading {
+    width: 100%;
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 3rem;
+}
+
+@media (min-width:768px) {
+    .capa {
+        padding-inline: 5rem;
+    }
+}
+
+.events {
+    display: grid;
+    grid-template-columns: 2fr 3fr 1fr;
+    align-items: center;
+    justify-content: center;
+    column-gap: .5rem;
+    padding: 1.2rem;
+    background-color: var(--color-fondo-dgr);
+    border-radius: .5rem;
+}
+
+@media (min-width:768px) {
+    .events {
+        column-gap: 2rem;
+        grid-template-columns: .8fr 1fr 1fr;
+        padding-inline: 15rem;
+    }
+}
+
+.events__img {
+    width: 100%;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.events__img img {
+    width: 100%;
+    border-radius: 100%;
+}
+
+@media (min-width:768px) {
+
+    .events__img,
+    .events__img img {
+        width: 20rem;
+    }
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .events__info p{
+    background-color: var(--color-fondo);
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    width: 100%;
+    margin: .5rem 0;
+    text-align: center;
+} */
+
+.events__info p {
+    width: 13rem;
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: left;
+    margin-bottom: .5rem;
+}
+
+@media (min-width:768px) {
+    .events__info p {
+        width: 100%;
+    }
+
+}
+
+
+.events__name {
+    font-weight: bold;
+    font-size: 1.9rem;
+}
+
+.areas {
+    width: 13rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media (min-width:768px) {
+    .areas {
+        width: 100%;
+    }
+
+    .areas p {
+        width: auto;
+        text-align: center;
+    }
+
+}
+
+.areas p {
+    background-color: var(--color-fondo);
+    border-radius: .5rem;
+    margin: .1rem;
+    padding: .4rem .8rem;
+}
+
+@media(min-width:768px) {
+    .events__actions {
+        flex-direction: row;
+        gap: 1rem;
+    }
+}
+
+.events__actions button {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: .5rem .8rem;
+    border: none;
+    border-radius: .5rem;
+    font-weight: 700;
+}
+
+.events__actions button:hover {
+    filter: contrast(2);
+    cursor: pointer;
+}
+
+.events__published {
+    background-color: var(--color-btns);
+}
+
+
+.events__delete {
+    background-color: var(--color-rojo-fondo);
+    color: var(--color-rojo);
+}
+
+.events__edit {
+    background-color: var(--color-verde-fondo);
+    color: var(--color-verde);
+}
