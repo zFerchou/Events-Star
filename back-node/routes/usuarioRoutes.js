@@ -9,6 +9,8 @@ import {
     editarUsuario,
     eliminarUsuario,
     loginUsuario,
+    verificarCodigo,
+    logoutUsuario,
     resetPasswordToken,
     comprobarResetToken,
     nuevoPassword
@@ -26,6 +28,13 @@ router.get('/confirmar/:token', confirmarUsuario);
 
 // Login de usuario
 router.post('/login', loginUsuario);
+
+///verificar-codigo
+router.post('/verificar-codigo', verificarCodigo);
+
+//logout
+router.post('/logout', logoutUsuario);
+
 
 // Listar todos los usuarios
 router.get('/', listarUsuarios);

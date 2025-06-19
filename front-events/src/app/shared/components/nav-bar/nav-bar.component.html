@@ -5,20 +5,36 @@
 
 
     <div class="links">
-        <a [routerLink]="['/events/all-events']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Ver Eventos</a>
-        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Conciertos</a>
-        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Deportes</a>
+        <a [routerLink]="['/events/all-events']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            class="links__link">Ver Eventos</a>
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            class="links__link">Conciertos</a>
+        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            class="links__link">Deportes</a>
         @if( user().role === ROLE ){
-            <a [routerLink]="['/events/create']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="links__link">Publicar Evento</a>
+        <a [routerLink]="['/events/create']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+            class="links__link">Publicar Evento</a>
         }
     </div>
 
     <div class="auth">
         @if( user()._id ){
-            <a (click)="logout()" class="auth__login">Cerrar Sesión</a>
+        <a (click)="logout()" class="auth__login">Cerrar Sesión</a>
         } @else {
-            <a [routerLink]="['/users/login']" class="auth__login">Iniciar Sesión</a>
+        <a [routerLink]="['/users/login']" class="auth__login">Iniciar Sesión</a>
         }
         <a [routerLink]="['/users/signup']" class="auth__signup">Crear Cuenta</a>
     </div>
 </nav>
+
+@if (showTimeoutDialog()) {
+<div class="dialog-overlay">
+    <div class="dialog-box">
+        <h2>¿Deseas extender tu sesión?</h2>
+        <div class="dialog-actions">
+            <button (click)="onEndSession()">Cerrar sesión</button>
+            <button (click)="onExtendSession()">Extender sesión</button>
+        </div>
+    </div>
+</div>
+}

@@ -24,10 +24,14 @@ interface ApiResponse<T> {
 export class UsuarioService {
   private http = inject(HttpClient);
   private router = inject(Router);
+
   public usuarios = signal<Usuario[]>([]);
   public usuarioSeleccionado = signal<Usuario | null>(null);
-  public user = signal<string|null>(null);
+  public user = signal<string | null>(null);
+
   public cargando = signal(false);
+  public fase = signal('login');
+
   public error = signal<string | null>(null);
 
   public totalUsuarios = computed(() => this.usuarios().length);
@@ -35,7 +39,7 @@ export class UsuarioService {
   constructor() {
     //this.cargarUsuarios();
     this.user.set(window.sessionStorage.getItem('usr'));
-    
+
   }
 
   mostrarErrores = effect(() => {
@@ -150,33 +154,73 @@ export class UsuarioService {
   }
 
   loginUsuario(email: string, pass: string) {
-  this.error.set(null);
+    this.error.set(null);
 
-  return this.http.post<ApiResponse<Usuario>>(
-    `${environment.apiUrl}/users/login`,
-    { email, pass },
-    {
-      withCredentials: true // necesario para que la cookie se guarde
-    }
-  ).pipe(
-    tap({
-      next: (res) => {
-        if (res.status === 'success') {
-          this.usuarioSeleccionado.set(res.data);
-          window.sessionStorage.setItem('usr', JSON.stringify( this.usuarioSeleccionado() ) );
-          this.user.set(window.sessionStorage.getItem('usr'));
-          console.log(this.user());
-          this.router.navigate(['/events/home'])
-        } else {
-          this.error.set(res.msg);
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.error.set(err['error'].msg);
+    return this.http.post<ApiResponse<Usuario>>(
+      `${environment.apiUrl}/users/login`,
+      { email, pass },
+      {
+        withCredentials: true // necesario para que la cookie se guarde
       }
-    })
-  );
-}
+    ).pipe(
+      tap({
+        next: (res) => {
+          if (res.status === '2fa') {
+            /* this.usuarioSeleccionado.set(res.data);
+            window.sessionStorage.setItem('usr', JSON.stringify( this.usuarioSeleccionado() ) );
+            this.user.set(window.sessionStorage.getItem('usr'));
+            console.log(this.user());
+            this.router.navigate(['/events/home']) */
+            this.fase.set('codigo');
+
+          } else {
+            this.error.set(res.msg);
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.error.set(err['error'].msg);
+        }
+      })
+    );
+  }
+
+  verificarCodigo(email: string, codigo: string) {
+    console.log('verificando...')
+    this.error.set(null);
+
+    return this.http.post<ApiResponse<Usuario>>(
+      `${environment.apiUrl}/users/verificar-codigo`,
+      { email, codigo },
+      {
+        withCredentials: true // necesario para que la cookie se guarde
+      }
+    ).pipe(
+      tap({
+        next: (res) => {
+          if (res.status === 'success') {
+            console.log(res)
+            this.usuarioSeleccionado.set(res.data);
+            window.sessionStorage.setItem('usr', JSON.stringify(this.usuarioSeleccionado()));
+            this.user.set(window.sessionStorage.getItem('usr'));
+            console.log(this.user());
+            this.fase.set('login');
+            this.router.navigate(['/events/home'])
+
+          } else {
+            this.error.set(res.msg);
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.error.set(err['error'].msg);
+        }
+      })
+    );
+  }
+
+  logout() {
+    return this.http.post<any>(`${environment.apiUrl}/users/logout`, {}, { withCredentials: true });
+  }
 
 }

@@ -19,12 +19,12 @@
 
         <div class="events__actions flex">
             <!--  -->
-            @if (true) {
+            @if (usr().role === ROLE) {
             <button class="events__published">Publicado</button>
             <button class="events__delete">Borrar</button>
             <button class="events__edit">Editar</button>
             }@else {
-            <button class="events__published">Reservar</button>
+            <button (click)="reservar()" class="events__published">Reservar</button>
             }
         </div>
     </div>

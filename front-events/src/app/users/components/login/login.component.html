@@ -1,7 +1,8 @@
+@if(usuarioService.fase()==='login'){
 <div class="capa">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
     <h2 class="form-heading">Iniciar Sesión</h2>
-    
+
     <div class="form-campo">
       <label for="email">Email</label>
       <input type="email" id="email" formControlName="email" placeholder="usuario@correo.com" />
@@ -10,18 +11,39 @@
       </div>
     </div>
 
-    <div class="form-campo" >
+    <div class="form-campo">
       <label for="pass">Contraseña</label>
       <input type="password" id="pass" formControlName="pass" placeholder="••••••" />
       <div *ngIf="loginForm.get('pass')?.invalid && loginForm.get('pass')?.touched" class="error">
         La contraseña es obligatoria (mínimo 6 caracteres).
       </div>
     </div>
-    
-    <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
+
+    <div id="recaptcha-container"></div>
+
+    <button type="submit" [disabled]="loginForm.invalid || !captchaValido">Iniciar sesión</button>
+
 
     <div *ngIf="usuarioService.error()" class="error">
       {{ usuarioService.error() }}
     </div>
   </form>
 </div>
+}@else if (usuarioService.fase()==='codigo') {
+  <div class="capa">
+  <form [formGroup]="codigoForm" (ngSubmit)="verificar()" class="login-form">
+    <h2 class="form-heading">Autenticación en dos pasos</h2>
+
+    <div class="form-campo">
+      <label for="codigo">Codigo</label>
+      <input type="text" id="codigo" formControlName="codigo" placeholder="123456" />
+    </div>
+
+    <button type="submit" [disabled]="codigoForm.invalid">Iniciar sesión</button>
+
+    <div *ngIf="usuarioService.error()" class="error">
+      {{ usuarioService.error() }}
+    </div>
+  </form>
+</div>
+}

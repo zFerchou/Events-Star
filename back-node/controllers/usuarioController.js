@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 
 import Usuario from "../models/Usuario.js";
-import { generarId,generarJWT } from "../helpers/generarId.js";
-import { emailRegistro, emailOlvidePass } from '../helpers/email.js'
+import { generarId, generarJWT } from "../helpers/generarId.js";
+import { emailRegistro, emailOlvidePass, emailCodigoVerificacion } from '../helpers/email.js'
 
 
 class Respuesta {
@@ -222,14 +222,14 @@ const loginUsuario = async (req, res) => {
             return res.status(400).json(respuesta);
         }
 
-        if(usuario.confirm === false){
+        if (usuario.confirm === false) {
             respuesta.status = 'error';
             respuesta.msg = 'La cuenta no ha sido confirmada';
             return res.status(400).json(respuesta);
         }
 
         // Generar JWT
-        const token = generarJWT({ id: usuario._id, name: usuario.name });
+        /**const token = generarJWT({ id: usuario._id, name: usuario.name });
 
         // Limpiar datos sensibles
         const usuarioRespuesta = usuario.toObject();
@@ -251,12 +251,117 @@ const loginUsuario = async (req, res) => {
         respuesta.status = 'success';
         respuesta.msg = 'Inicio de sesión exitoso';
         respuesta.data = usuarioRespuesta;
-        res.json(respuesta);
+        res.json(respuesta);*/
+
+        // Generar código de 6 dígitos
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+        // Guardar OTP y expiración (5 minutos)
+        usuario.otp = otp;
+        usuario.otpExpires = Date.now() + 5 * 60 * 1000;
+        await usuario.save();
+
+        // Enviar el código por correo
+        await emailCodigoVerificacion({
+            email: usuario.email,
+            name: usuario.name,
+            otp: otp
+        });
+
+        // Enviar respuesta indicando que falta el 2FA
+        respuesta.status = '2fa';
+        respuesta.msg = 'Código enviado por correo';
+        respuesta.data = { email: usuario.email };
+        return res.json(respuesta);
 
     } catch (error) {
         console.log(error);
         respuesta.status = 'error';
         respuesta.msg = 'Error al iniciar sesión';
+        res.status(500).json(respuesta);
+    }
+};
+
+const verificarCodigo = async (req, res) => {
+    let respuesta = new Respuesta();
+
+    try {
+        const { email, codigo } = req.body;
+
+        const usuario = await Usuario.findOne({ email });
+
+        if (!usuario) {
+            respuesta.status = 'error';
+            respuesta.msg = 'Usuario no encontrado';
+            return res.status(404).json(respuesta);
+        }
+
+        // Verificar código y expiración
+        const expirado = !usuario.otpExpires || new Date(usuario.otpExpires) < new Date();
+        const codigoValido = usuario.otp === codigo;
+
+        if (!codigoValido || expirado) {
+            respuesta.status = 'error';
+            respuesta.msg = 'Código inválido o expirado';
+            return res.status(401).json(respuesta);
+        }
+
+        // Limpiar OTP
+        usuario.otp = null;
+        usuario.otpExpires = null;
+        await usuario.save();
+
+        // Generar JWT
+        const token = generarJWT({ id: usuario._id, name: usuario.name });
+
+        // Limpiar datos sensibles
+        const usuarioRespuesta = usuario.toObject();
+        delete usuarioRespuesta.pass;
+        delete usuarioRespuesta.token;
+        //delete usuarioRespuesta.role;
+        delete usuarioRespuesta.confirm;
+        delete usuarioRespuesta.otp;
+        delete usuarioRespuesta.otpExpires;
+
+        res.cookie('_jwtn', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 1000 * 60 * 60 * 24 * 2
+        });
+
+        respuesta.status = 'success';
+        respuesta.msg = 'Autenticación completada';
+        respuesta.data = usuarioRespuesta;
+        res.json(respuesta);
+
+    } catch (error) {
+        console.log(error);
+        respuesta.status = 'error';
+        respuesta.msg = 'Error al verificar el código';
+        res.status(500).json(respuesta);
+    }
+};
+
+const logoutUsuario = async (req, res) => {
+    let respuesta = new Respuesta();
+
+    try {
+        // Limpia la cookie del JWT
+        res.clearCookie('_jwtn', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        });
+
+        respuesta.status = 'success';
+        respuesta.msg = 'Sesión cerrada correctamente';
+        res.json(respuesta);
+
+    } catch (error) {
+        console.log(error);
+        respuesta.status = 'error';
+        respuesta.msg = 'Error al cerrar sesión';
         res.status(500).json(respuesta);
     }
 };
@@ -394,6 +499,8 @@ export {
     editarUsuario,
     eliminarUsuario,
     loginUsuario,
+    verificarCodigo,
+    logoutUsuario,
     resetPasswordToken,
     comprobarResetToken,
     nuevoPassword
