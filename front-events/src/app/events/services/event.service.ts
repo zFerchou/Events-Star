@@ -13,6 +13,9 @@ export interface Evento {
   participants?: any[];
   createdBy?: string;
   image?: string;
+  reservated?: boolean;
+  published?: boolean;
+  category?:string;
 }
 
 interface ApiResponse<T> {
@@ -171,10 +174,7 @@ export class EventService {
         next: (resp) => {
           if (resp.status === 'success') {
             this.eventos.update(list => list.map(ev => ev._id === idEvento ? resp.data : ev));
-            if (this.eventoSeleccionado()?._id === idEvento) {
-              this.eventoSeleccionado.set(resp.data);
-              console.log(resp);
-            }
+            alert('Has hecho una reservación!')
           } else {
             this.error.set(resp.msg);
           }
@@ -183,13 +183,13 @@ export class EventService {
           this.error.set(err['error'].msg);
         }
       })
-    ).subscribe();
+    );
   }
 
-  anularReserva(idEvento: string, idUsuario: string){
+  anularReserva(idEvento: string, idUsuario: string) {
     this.error.set(null);
     return this.http.delete<ApiResponse<Evento>>(`${environment.apiUrl}/events/${idEvento}/participantes`, {
-      body:{ idUsuario },
+      body: { idUsuario },
       withCredentials: true
     }).pipe(
       tap({
@@ -202,7 +202,7 @@ export class EventService {
           this.error.set(err['error'].msg);
         }
       })
-    ).subscribe();
+    );
 
   }
 }

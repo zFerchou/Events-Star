@@ -1,32 +1,40 @@
 <div class="capa">
 
     <h2 class="heading">Todos los eventos</h2>
-    <div class="events">
-        <div class="events__img">
-            <img src="no-image-available.webp" alt="imagen del evento">
-        </div>
 
-        <div class="events__info flex">
-            <p class="events__name">event.namessssssssss</p>
-            <p class="events_capacity">Capacidad: 5</p>
-            <p class="events__date">event.date</p>
-            <p class="events__city">event.city</p>
-            <div class="areas">
-                <p class="events__area">event.areaInteres</p>
-                <p class="events__category">event.category</p>
+    @for(item of events(); track $index){
+
+        <div class="events">
+            <div class="events__img">
+                <img src="no-image-available.webp" alt="imagen del evento">
+            </div>
+            
+            <div class="events__info flex">
+                <p class="events__name">{{item.eventName}}</p>
+                <p class="events_capacity">Capacidad: {{item.maxCapacity}}</p>
+                <p class="events__date">{{item.date | date }}</p>
+                <p class="events__city">{{item.city['name']}}</p>
+                <div class="areas">
+                    <p class="events__area">{{item.areaInteres['name'] || ''}}</p>
+                    <p class="events__category">{{item.category || 'NA'}}</p>
+                </div>
+            </div>
+            
+            <div class="events__actions flex">
+                <!--  -->
+                @if (usr().role === ROLE) {
+                    <button (click)="onPublished(item._id!)" class="events__published">Publicado</button>
+                    <button (click)="onDelete(item._id!)" class="events__delete">Borrar</button>
+                    <button (click)="onEdit(item._id!)" class="events__edit">Editar</button>
+                }@else {
+                    @if ( item.reservated ) {
+                        <button (click)="anularReservacion(item._id!,item)" class="event-card__btn--reservado">Reservado</button>
+                    }@else{
+                        <button (click)="reservation(item._id!,item)" class="events__published">Reservar</button>
+                    }
+                }
             </div>
         </div>
-
-        <div class="events__actions flex">
-            <!--  -->
-            @if (usr().role === ROLE) {
-            <button class="events__published">Publicado</button>
-            <button class="events__delete">Borrar</button>
-            <button class="events__edit">Editar</button>
-            }@else {
-            <button (click)="reservar()" class="events__published">Reservar</button>
-            }
-        </div>
-    </div>
+    }
 
 </div>
