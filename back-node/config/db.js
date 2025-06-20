@@ -8,7 +8,7 @@ const conectarDB = async () => {
         console.log(`MongoDB Conectado en: ${url}`)
     }catch(error){
         console.warn(`error: ${error}`);
-        process.exit(1); //para forzar a que el proceso termine
+        process.exit(1); 
     }
 }
 export default conectarDB;
