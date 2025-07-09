@@ -1,40 +1,63 @@
 <nav class="nav">
-    <div class="logo">
-        <h1 [routerLink]="['/']" class="logo__txt">Event<span>Star</span></h1>
-    </div>
+  <div class="logo">
+    <h1 [routerLink]="['/']" class="logo__txt">Event<span>Star</span></h1>
+  </div>
 
+  <div class="links">
+    <a
+      [routerLink]="['/events/all-events']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="links__link"
+    >Ver Eventos</a>
 
-    <div class="links">
-        <a [routerLink]="['/events/all-events']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-            class="links__link">Ver Eventos</a>
-        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-            class="links__link">Conciertos</a>
-        <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-            class="links__link">Deportes</a>
-        @if( user().role === ROLE ){
-        <a [routerLink]="['/events/create']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-            class="links__link">Publicar Evento</a>
-        }
-    </div>
+    <a
+      [routerLink]="['/']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="links__link"
+    >Conciertos</a>
 
-    <div class="auth">
-        @if( user()._id ){
-        <a (click)="logout()" class="auth__login">Cerrar Sesión</a>
-        } @else {
-        <a [routerLink]="['/users/login']" class="auth__login">Iniciar Sesión</a>
-        }
-        <a [routerLink]="['/users/signup']" class="auth__signup">Crear Cuenta</a>
-    </div>
+    <a
+      [routerLink]="['/']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="links__link"
+    >Deportes</a>
+
+    <a
+      *ngIf="user()?.role === ROLE"
+      [routerLink]="['/events/create']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="links__link"
+    >Publicar Evento</a>
+
+    <a
+      *ngIf="user()?._id"
+      (click)="onEditarClick()"
+      class="links__link"
+      style="cursor: pointer;"
+    >Editar Perfil</a>
+  </div>
+
+  <div class="auth">
+    <a *ngIf="user()?._id; else loginLink" (click)="logout()" class="auth__login">Cerrar Sesión</a>
+    <ng-template #loginLink>
+      <a [routerLink]="['/users/login']" class="auth__login">Iniciar Sesión</a>
+    </ng-template>
+    <a [routerLink]="['/users/signup']" class="auth__signup">Crear Cuenta</a>
+  </div>
 </nav>
 
-@if (showTimeoutDialog()) {
-<div class="dialog-overlay">
-    <div class="dialog-box">
-        <h2>¿Deseas extender tu sesión?</h2>
-        <div class="dialog-actions">
-            <button (click)="onEndSession()">Cerrar sesión</button>
-            <button (click)="onExtendSession()">Extender sesión</button>
-        </div>
+<!-- 🔴 Cuadro de diálogo de sesión -->
+<div *ngIf="showTimeoutDialog()" class="dialog-overlay">
+  <div class="dialog-box">
+    <h2>¿Deseas extender tu sesión?</h2>
+    <p>Tu sesión expirará en <strong>{{ countdown() }}</strong> segundos.</p>
+    <div class="dialog-actions">
+      <button (click)="onEndSession()">Cerrar sesión</button>
+      <button (click)="onExtendSession()">Extender sesión</button>
     </div>
+  </div>
 </div>
-}

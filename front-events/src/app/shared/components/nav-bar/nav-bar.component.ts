@@ -1,11 +1,21 @@
-import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal
+} from '@angular/core';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../../users/services/usuario.service';
+import { CommonModule } from '@angular/common';
 import {
   fromEvent,
   merge,
   Subscription,
-  timer
+  timer,
+  interval
 } from 'rxjs';
 import {
   debounceTime,
@@ -15,7 +25,8 @@ import {
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [RouterModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
@@ -23,19 +34,47 @@ export class NavBarComponent implements OnInit, OnDestroy {
   public ROLE = '4DMlN';
   private USR_KEY = 'usr';
   private userServ = inject(UsuarioService);
+  private router = inject(Router);
+
   public user = computed(() => {
-    let usr = JSON.parse(this.userServ.user() || '{}');
-    return usr;
+    try {
+      return JSON.parse(this.userServ.user() || '{}');
+    } catch {
+      return {};
+    }
   });
 
   private activityEvents$: Subscription | undefined;
-  private timeoutMs = 1 * 60 * 1000; // 15 minutos
-  showTimeoutDialog = signal(false); // para mostrar u ocultar el modal
+  private timeoutMs = 900000; 
+  showTimeoutDialog = signal(false);
+
+  countdown = signal(0); 
+  private countdownSubscription: Subscription | null = null;
+  private countdownSeconds = 30; 
+
+  private startCountdown() {
+    this.countdown.set(this.countdownSeconds);
+
+    this.countdownSubscription?.unsubscribe();
+    this.countdownSubscription = interval(1000).subscribe(() => {
+      const current = this.countdown();
+      if (current > 0) {
+        this.countdown.set(current - 1);
+      } else {
+        this.countdownSubscription?.unsubscribe();
+        this.onEndSession();
+      }
+    });
+  }
+
+  private stopCountdown() {
+    this.countdownSubscription?.unsubscribe();
+    this.countdownSubscription = null;
+  }
 
   private sessionEffect = effect(() => {
     const usr = this.user();
 
-    // Limpia suscripción anterior
     this.activityEvents$?.unsubscribe();
 
     if (Object.keys(usr).length > 0) {
@@ -53,6 +92,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
           switchMap(() => timer(this.timeoutMs)),
           tap(() => {
             this.showTimeoutDialog.set(true);
+            this.startCountdown(); // ⏱ inicia cuenta regresiva
           })
         )
         .subscribe();
@@ -63,9 +103,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log(this.user());
-
   }
-
 
   logout() {
     window.sessionStorage.removeItem(this.USR_KEY);
@@ -76,17 +114,25 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   onExtendSession() {
     this.showTimeoutDialog.set(false);
-    this.ngOnInit(); // reinicia el contador
+    this.stopCountdown(); // Detiene el contador
+    this.ngOnInit(); // Reinicia el contador
   }
 
   onEndSession() {
     this.showTimeoutDialog.set(false);
-    this.logout();
+    this.stopCountdown(); // Detiene el contador
+    this.logout(); // Cierra la sesión
+  }
+
+  onEditarClick() {
+    const user = this.user();
+    if (user && user.email) {
+      this.router.navigate(['/users/editar', encodeURIComponent(user.email)]);
+    }
   }
 
   ngOnDestroy(): void {
     this.activityEvents$?.unsubscribe();
+    this.stopCountdown();
   }
 }
-
-
