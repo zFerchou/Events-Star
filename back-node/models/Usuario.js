@@ -31,12 +31,12 @@ const usuarioSchema = mongoose.Schema(
             trim: true,
             unique: true,
             lowercase: true,
-            match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, "Email no válido"]
+            match: [/^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/, "Email no válido"]
         },
         phone: {
             type: String,
             trim: true,
-            match: [/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/, "Teléfono no válido"]
+            match: [/^[+][(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]$/, "Teléfono no válido"]
         },
         token: {
             type: String
