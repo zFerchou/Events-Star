@@ -71,4 +71,3 @@ export class RegistroUsuarioComponent {
   }
 }
 
-<!-- Cambio de prueba -->
