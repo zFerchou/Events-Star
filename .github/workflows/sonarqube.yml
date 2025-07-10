@@ -5,7 +5,7 @@ on:
     paths:
       - 'front-events/**'
     branches: [ test ]
-  workflow_dispatch:
+  workflow_dispatch:  # Esto permite ejecutarlo manualmente
 
 jobs:
   sonarQubeScan:
@@ -18,6 +18,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
+          distribution: 'temurin'  # <-- ¡Esto es lo que faltaba!
 
       - name: Run SonarScanner
         working-directory: front-events
@@ -27,4 +28,7 @@ jobs:
           curl -sSLo sonar.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
           unzip sonar.zip
           ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
-            -Dsonar.projectKey=events-fronten
+            -Dsonar.projectKey=events-frontend \
+            -Dsonar.sources=src \
+            -Dsonar.host.url=https://0f96f191e606.ngrok-free.app \
+            -Dsonar.token=$SONAR_TOKEN
