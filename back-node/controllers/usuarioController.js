@@ -505,3 +505,5 @@ export {
     comprobarResetToken,
     nuevoPassword
 };
+
+// verificacion de A07
