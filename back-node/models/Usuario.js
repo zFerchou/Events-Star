@@ -67,4 +67,5 @@ const usuarioSchema = mongoose.Schema(
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 export default Usuario;
 
-// verificacion de A07
+// verificacionn de A07
+//Verificación de Injecciones A03
