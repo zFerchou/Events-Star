@@ -1,0 +1,30 @@
+name: SonarQube Frontend
+
+on:
+  push:
+    paths:
+      - 'front-events/**'
+    branches: [ test ]
+  workflow_dispatch:
+
+jobs:
+  sonarQubeScan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      - name: Run SonarScanner
+        working-directory: front-events
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          curl -sSLo sonar.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar.zip
+          ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
+            -Dsonar.projectKey=events-fronten
