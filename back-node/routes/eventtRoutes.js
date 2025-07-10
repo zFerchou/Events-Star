@@ -29,3 +29,5 @@ router.post('/:idEvento/participantes', agregarParticipante);
 router.delete('/:idEvento/participantes', anularReserva);
 
 export default router;
+
+//seguridad de roles A01
