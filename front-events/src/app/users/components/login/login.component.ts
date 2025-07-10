@@ -112,3 +112,6 @@ export class LoginComponent implements OnInit {
 
 
 }
+
+
+//verificacion de funcionamiento de captcha
